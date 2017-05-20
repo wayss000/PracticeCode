@@ -11,7 +11,7 @@ class Consumer implements Runnable {
     }
     
     public void run(){
-        for(int i = 0; i < consumeNum; i++){
+        for(int i = 1; i <= consumeNum; i++){
             try {
                 String str = queue.take();
                 System.out.println(consumeMess + str);
