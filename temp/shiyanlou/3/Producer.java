@@ -11,7 +11,7 @@ class Producer implements Runnable {
     }
     
     public void run(){
-        for(int i = 0; i < produceNum; i++){
+        for(int i = 1; i <= produceNum; i++){
             try {
                 queue.put(String.valueOf(i));
                 System.out.println(produceMess + i);
