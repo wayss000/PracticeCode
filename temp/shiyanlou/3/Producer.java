@@ -4,7 +4,7 @@ class Producer implements Runnable {
     private final BlockingQueue<String> queue;
     
     private int produceNum = 10;
-    private String produceMess = "complete production:Course";
+    private String produceMess = "Complete production:Course";
     
     public Producer(BlockingQueue<String> queue){
         this.queue = queue;

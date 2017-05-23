@@ -4,7 +4,7 @@ class Consumer implements Runnable {
     private final BlockingQueue<String> queue;
     
     private int consumeNum = 10;
-    private String consumeMess = "complete consumption:Course";
+    private String consumeMess = "Complete consumption:Course";
     
     public Consumer(BlockingQueue queue){
         this.queue = queue;
