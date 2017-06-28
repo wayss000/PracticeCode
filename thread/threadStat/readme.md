@@ -8,4 +8,4 @@ Main
 	->Thread(111)->Object(BBB)->Object(AAA)
 	->Thread(222)->Object(BBB)->Object(AAA)
 	
-对象AAA中打印的线程状态是项目独立的
+对象AAA中打印的线程状态是线程独立的
