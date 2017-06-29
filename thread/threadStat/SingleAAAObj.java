@@ -12,12 +12,9 @@ public class SingleAAAObj {
        return instance;
     }
 
-    public void showMessage(){
-       System.out.println(this);
-       System.out.println(Thread.currentThread().getName() + "SingleObject isInterrupted:" + Thread.currentThread().isInterrupted());
-       System.out.println(Thread.currentThread().getName() + "SingleObject interrupted:" + Thread.interrupted());
-       System.out.println(Thread.currentThread().getName() + "SingleObject isInterrupted:" + Thread.currentThread().isInterrupted());
-       
-//       System.out.println("SingleObject isInterrupted:" + Thread.currentThread().isInterrupted());
+    public void showThreadStatus(){
+        //打印对象hashcode，确定是同一个对象
+        System.out.println(this);
+        System.out.println(Thread.currentThread().getName() + "SingleObject isInterrupted:" + Thread.currentThread().isInterrupted());
     }
  }
