@@ -12,6 +12,9 @@ public class StringUtils {
      * @return
      */
     public static boolean allIsNotNull(String... s){
+        if(s.length == 0){
+            return false;
+        }
         for(String str : s){
             if(str == null){
                 return false;
@@ -26,6 +29,9 @@ public class StringUtils {
      * @return
      */
     public static boolean allIsNotEmpty(String... s){
+        if(s.length == 0){
+            return false;
+        }
         for(String str : s){
             if(str == null){
                 return false;
