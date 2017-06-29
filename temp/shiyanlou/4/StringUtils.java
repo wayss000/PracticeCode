@@ -12,7 +12,7 @@ public class StringUtils {
      * @return
      */
     public static boolean allIsNotNull(String... s){
-        if(s.length == 0){
+        if(s == null || s.length == 0){
             return false;
         }
         for(String str : s){
@@ -29,7 +29,7 @@ public class StringUtils {
      * @return
      */
     public static boolean allIsNotEmpty(String... s){
-        if(s.length == 0){
+        if(s == null || s.length == 0){
             return false;
         }
         for(String str : s){
