@@ -32,7 +32,7 @@ public class SortForHashMap {
     
     public Set sortKey(){
         Set<String> sortkey = new TreeSet<String>(hashMap.keySet());
-        Iterator it = sortkey.iterator();
+//        Iterator it = sortkey.iterator();
 //        while(it.hasNext()){
 //            System.out.println(it.next());
 //        }
@@ -51,19 +51,18 @@ public class SortForHashMap {
         int i = 0;
         Map<String,String> resultMap = new HashMap<String,String>();
         while(it.hasNext()){
-            if(i == range){
-                i = 0;
-                sumResultKey = 0;
-                sumResultValue = 0;
-            }
             Object o = it.next();
             sumResultKey += Long.valueOf(o.toString());
             sumResultValue += Long.valueOf(hashMap.get(o));
             i++;
-            if(i == range - 1){
+            //当i累计的次数和range的次数相等时，数据取平均值并保存，并将计数器i,sumResultKey,sumResultValue重置
+            if(i == range){
                 long key = sumResultKey / range;
                 int value = sumResultValue / range;
                 resultMap.put(String.valueOf(key), String.valueOf(value));
+                i = 0;
+                sumResultKey = 0;
+                sumResultValue = 0;
             }
         }
         System.out.println("hashMap.size:" + hashMap.size());
