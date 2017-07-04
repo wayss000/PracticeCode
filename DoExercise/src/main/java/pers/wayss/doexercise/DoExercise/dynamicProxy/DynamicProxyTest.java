@@ -55,3 +55,10 @@ class DynamicProxyHandler implements InvocationHandler{
     
 }
 
+/*
+ * 动态代理代码的编写方法：
+ * 1.动态代理应用的场景必定有一个接口和若干个实现
+ * 2.实现InvocationHandler接口
+ * 3.通过Proxy.newProxyInstance()静态方法得到动态代理类
+ * 4.执行第三步得到的接口的方法
+ */
