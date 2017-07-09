@@ -1,21 +1,20 @@
 ## 目录说明
 
-### for循环示例代码
+### 使用for循环
 
 startAllTomcat.sh
 copyWebTest.sh
 
-### abTPS100.sh
+### let定义数字
 
-1. 使用for循环
-2. let定义数字
-3. ab压测命令
+abTPS100.sh
 
-### deployTomcat.sh
+### export 命名变量
 
-1. export 命名变量
-2. sed命令在shell中的用法，用sed把某个文件中指定的字符修改为另一个。
+deployTomcat.sh
 
-### installWebgateAgent.sh
+### sed的高级用法：
 
-1. sed的高级用法：其中"111i"表示在第111行插入后面的内容。
+installWebgateAgent.sh
+1. 其中"111i"表示在第111行插入后面的内容。
+
