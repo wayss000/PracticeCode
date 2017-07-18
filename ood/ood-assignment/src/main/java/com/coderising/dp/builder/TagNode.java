@@ -15,6 +15,9 @@ public class TagNode {
 	public void add(TagNode child){
 		this.children.add(child);
 	}
+	public void setChildren(List<TagNode> children){
+	    this.children = children;
+	}
 	public void setAttribute(String name, String value) {
 		Attribute attr = findAttribute(name);
 		if(attr != null){
@@ -23,7 +26,7 @@ public class TagNode {
 		
 		attributes.add(new Attribute(name,value));
 	}
-	private Attribute findAttribute(String name){
+	public Attribute findAttribute(String name){
 		for(Attribute attr : attributes){
 			if(attr.name.equals(name)){
 				return attr;
