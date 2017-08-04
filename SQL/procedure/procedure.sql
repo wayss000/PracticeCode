@@ -1,29 +1,29 @@
--- Õâ¸ö´æ´¢¹ý³ÌµÄ×÷ÓÃÊÇ£ºÊäÈëÒ»¸öÑ§ºÅ£¬
--- ¼ÆËãÐ¡ÓÚÕâ¸öÑ§ºÅµÄÑ§ÉúµÄÆ½¾ù³É¼¨
+-- è¿™ä¸ªå­˜å‚¨è¿‡ç¨‹çš„ä½œç”¨æ˜¯ï¼šè¾“å…¥ä¸€ä¸ªå­¦å·ï¼Œ
+-- è®¡ç®—å°äºŽè¿™ä¸ªå­¦å·çš„å­¦ç”Ÿçš„å¹³å‡æˆç»©
 
 
--- ¶¨Òå»»ÐÐ·û
+-- å®šä¹‰æ¢è¡Œç¬¦
 delimiter //
 
 DROP PROCEDURE IF EXISTS sp_getave;
--- ´´½¨´æ´¢¹ý³Ìsp_getave,
--- ÓÐÁ½¸ö²ÎÊý£¬·Ö±ðÊÇÒ»¸öÊäÈë²ÎÊý£¬Ò»¸öÊä³ö²ÎÊý
+-- åˆ›å»ºå­˜å‚¨è¿‡ç¨‹sp_getave,
+-- æœ‰ä¸¤ä¸ªå‚æ•°ï¼Œåˆ†åˆ«æ˜¯ä¸€ä¸ªè¾“å…¥å‚æ•°ï¼Œä¸€ä¸ªè¾“å‡ºå‚æ•°
 CREATE PROCEDURE sp_getave(IN input INT, OUT output INT)
--- ´æ´¢¹ý³Ì¿ªÊ¼
+-- å­˜å‚¨è¿‡ç¨‹å¼€å§‹
 BEGIN
--- ´æ´¢¹ý³ÌÄÚÈÝ
+-- å­˜å‚¨è¿‡ç¨‹å†…å®¹
 	SELECT 
 		@sum := @sum + value 
 	FROM student s, (SELECT @sum := 0) v
 	WHERE s.id < input;
 	SET output := @sum / (input - 1);
--- ´æ´¢¹ý³Ì½áÊø£¬×¢Òâ£ºENDºóÐèÒª¼ÓÉÏ»»ÐÐ·û±êÖ¾£¬¼´£¬×î¿ªÊ¼¶¨ÒåµÄ
+-- å­˜å‚¨è¿‡ç¨‹ç»“æŸï¼Œæ³¨æ„ï¼šENDåŽéœ€è¦åŠ ä¸Šæ¢è¡Œç¬¦æ ‡å¿—ï¼Œå³ï¼Œæœ€å¼€å§‹å®šä¹‰çš„
 END //
 
--- ½«»»ÐÐ·û»»»ØÀ´
+-- å°†æ¢è¡Œç¬¦æ¢å›žæ¥
 delimiter ;
 
--- Ö´ÐÐ
+-- æ‰§è¡Œ
 CALL sp_getave(4,@output);
--- ²é¿´Êä³ö½á¹û
+-- æŸ¥çœ‹è¾“å‡ºç»“æžœ
 SELECT @output;
