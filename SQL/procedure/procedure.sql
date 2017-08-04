@@ -13,7 +13,7 @@ CREATE PROCEDURE sp_getave(IN input INT, OUT output INT)
 BEGIN
 -- 存储过程内容
 	SELECT 
-		@sum := @sum + value 
+		@sum := @sum + value
 	FROM student s, (SELECT @sum := 0) v
 	WHERE s.id < input;
 	SET output := @sum / (input - 1);
