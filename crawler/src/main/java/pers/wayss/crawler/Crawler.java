@@ -8,7 +8,7 @@ public class Crawler {
 //    private static final String URL_PATH = "http://www.douban.com/group/haixiuzu/discussion?start=0";
 //    private static final String URL_PRE = "douban.com/group/topic";
     
-    private static final String URL_PATH = "http://blog.sina.com.cn/s/blog_4de3b15e0102wixu.html";
+    private static final String URL_PATH = "https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&fm=index&pos=history&word=%E6%97%A5%E6%9C%AC%20%E7%BE%8E%E5%A5%B3";
 
     /**
      * 抓取过程

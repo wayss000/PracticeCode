@@ -25,9 +25,10 @@ public class DownLoadPic {
     private static final String IMGURL_REG = "<img.*src=(.*?)[^>]*?>";
     // 获取src路径的正则
     private static final String IMGSRC_REG = "http:\"?(.*?)(\"|>|\\s+)";
-    
     //输出路径
     private static final String FILE_OUT_PATH = "D:/照片图片/crawler/";
+    //文件名
+    private static int IMAGE_ID = 0;
 
     public static void downloadPic(String url) {
         // 获得html文本内容
@@ -114,15 +115,20 @@ public class DownLoadPic {
         FileOutputStream fo = null;
         for (String url : listImgSrc) {
             try {
-                String imageName = url.substring(url.lastIndexOf("/") + 1,
+                //每次命名后，让ID自增1
+                String imageName = IMAGE_ID++ + url.substring(url.lastIndexOf("."),
                         url.length());
                 
                 URL uri = new URL(url);
 //                System.out.println(uri);
                 conn = uri.openConnection();
                 in = conn.getInputStream();
+                //在这里对图片大小做个计算，小于10kb的图片不保存
+                if(in.available() < 10240){
+//                    MyLogger.printInfo(DownLoadPic.class, "this image's length:"+in.available());
+                    continue;
+                }
                 fo = new FileOutputStream(new File(FILE_OUT_PATH + imageName));
-                //TODO 在这里对图片大小做个计算，过小的图片则不需要下载
                 byte[] buf = new byte[1024];
                 int length = 0;
                 while ((length = in.read(buf, 0, buf.length)) != -1) {
