@@ -1,2 +1,1 @@
-path=C:\\vncviewer_auth_new_5.exe
-password=
+path=C:\\SYM_VNC.exe
