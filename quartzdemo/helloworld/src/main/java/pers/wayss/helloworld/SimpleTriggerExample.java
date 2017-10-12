@@ -1,4 +1,4 @@
-package pers.wayss.allTest;
+package pers.wayss.helloworld;
 
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;

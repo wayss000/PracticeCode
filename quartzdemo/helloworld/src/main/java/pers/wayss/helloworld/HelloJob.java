@@ -1,4 +1,4 @@
-package pers.wayss.allTest;
+package pers.wayss.helloworld;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
