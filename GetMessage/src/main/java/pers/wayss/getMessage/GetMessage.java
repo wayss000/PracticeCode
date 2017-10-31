@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetMessage extends HttpServlet {
     
-    private static final long serialVersionUID = 5326256122438445301L;
-    
     public GetMessage() {
         super();
     }
@@ -22,7 +20,11 @@ public class GetMessage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        request.setAttribute("message", Message.mes1);
+        String str = "为什么会乱码？";
+        request.setAttribute("message", str);
+        //TODO 下面这两行输入都会有乱码
+        System.out.println(str);
+        System.out.println(request.getAttribute("message"));
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
