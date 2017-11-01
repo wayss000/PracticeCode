@@ -21,10 +21,14 @@ public class GetMessage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String str = "为什么会乱码？";
+        String randomStr = Message.message();
         request.setAttribute("message", str);
+        request.setAttribute("randomMessage", randomStr);
         //TODO 下面这两行输入都会有乱码
         System.out.println(str);
+        System.out.println(randomStr);
         System.out.println(request.getAttribute("message"));
+        System.out.println(request.getAttribute("randomMessage"));
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
