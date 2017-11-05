@@ -39,6 +39,8 @@ function isIE(){
 </head>
 <body>
     <% String message = (String)request.getAttribute("message"); %>
+    <% String randomMessage = (String)request.getAttribute("randomMessage"); %>
     <p onclick="execClick();" oncopy="execCopy(event,this);"><%=message%></p>
+    <p onclick="execClick();" oncopy="execCopy(event,this);"><%=randomMessage%></p>
 </body>
 </html>
