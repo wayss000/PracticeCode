@@ -12,6 +12,22 @@
 		<servlet-name>getMessage</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>ImageServlet</servlet-name>
+		<servlet-class>pers.wayss.verification.ImageServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>pers.wayss.verification.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ImageServlet</servlet-name>
+		<url-pattern>/servlet/ImageServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/servlet/LoginServlet</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
