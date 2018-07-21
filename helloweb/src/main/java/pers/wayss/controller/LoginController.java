@@ -1,8 +1,10 @@
 package pers.wayss.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pers.wayss.domain.Message;
 import pers.wayss.interceptor.UserPasswdCheck;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,8 @@ public class LoginController {
      */
     @RequestMapping("login")
     @ResponseBody
-    public String login(HttpServletRequest httpServletRequest){
+    public Message login(HttpServletRequest httpServletRequest){
+        Message message = new Message();
 
         //获取前端（包括web、安卓、苹果）传来的用户名密码
         String userName = httpServletRequest.getParameter("userName");
@@ -34,9 +37,12 @@ public class LoginController {
         if (havePermission){
             HttpSession httpSession = httpServletRequest.getSession();
             httpSession.setAttribute("userName", userName);
-            return "true";
+            message.setIsSuccess(true);
+            message.setMessage("登陆成功");
         }
-        return "false";
+        message.setIsSuccess(false);
+        message.setMessage("登陆失败");
+        return message;
     }
 
     /**
@@ -45,7 +51,9 @@ public class LoginController {
      */
     @RequestMapping("register")
     @ResponseBody
-    public String register(HttpServletRequest httpServletRequest){
+    public Message register(HttpServletRequest httpServletRequest){
+
+        Message message = new Message();
 
         String userName = httpServletRequest.getParameter("userName");
         String passWord = httpServletRequest.getParameter("passWord");
@@ -54,9 +62,12 @@ public class LoginController {
         if (isRegisterOK){
             HttpSession httpSession = httpServletRequest.getSession();
             httpSession.setAttribute("userName", userName);
-            return "true";
+            message.setIsSuccess(true);
+            message.setMessage("登陆成功");
         }
-        return "false";
+        message.setIsSuccess(false);
+        message.setMessage("登陆失败");
+        return message;
 
     }
 
