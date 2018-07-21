@@ -33,5 +33,14 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!-- 4：扫描web相关的bean -->
-    <context:component-scan base-package="org.test.*" />
+    <context:component-scan base-package="pers.wayss.*" />
+
+    <!-- 5: 配置拦截器,若多个拦截器则按顺序执行-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/"/>
+            <bean class="pers.wayss.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
