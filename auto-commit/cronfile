@@ -1,0 +1,1 @@
+0 8 * * * /bin/bash /home/wayss/git-resp/PracticeCode/auto-commit/auto_commit.sh
