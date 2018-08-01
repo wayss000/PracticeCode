@@ -39,9 +39,10 @@ public class LoginController {
             httpSession.setAttribute("userName", userName);
             message.setIsSuccess(true);
             message.setMessage("登陆成功");
+        }else {
+            message.setIsSuccess(false);
+            message.setMessage("登陆失败");
         }
-        message.setIsSuccess(false);
-        message.setMessage("登陆失败");
         return message;
     }
 
@@ -64,9 +65,10 @@ public class LoginController {
             httpSession.setAttribute("userName", userName);
             message.setIsSuccess(true);
             message.setMessage("登陆成功");
+        }else {
+            message.setIsSuccess(false);
+            message.setMessage("登陆失败");
         }
-        message.setIsSuccess(false);
-        message.setMessage("登陆失败");
         return message;
 
     }
