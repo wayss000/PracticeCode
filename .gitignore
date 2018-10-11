@@ -1,0 +1,10 @@
+.svn
+.idea
+*.iml
+*.log
+*.log.*
+*.bat
+target
+.project
+.settings
+.classpath
