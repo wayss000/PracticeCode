@@ -3,7 +3,6 @@
 *.iml
 *.log
 *.log.*
-*.bat
 target
 .project
 .settings
