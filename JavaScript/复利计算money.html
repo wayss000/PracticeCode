@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html style="height: 100%">
-   <head>
-       <meta charset="utf-8">
-   </head>
-   <body style="height: 100%; margin: 0">
-       <div id="container" style="height: 100%"></div>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
-       <script type="text/javascript">
-	   //存放总年数
-	   var total = 100;
-	   //年利率
-	   var rate = 1.05;
-	   //初始金额
-	   var tempMoney = 100000;
-	   var sumCount = new Array(total);
-	   var sumMoney = new Array(total);
-	   var i = 0;
-	   do{
-			sumCount[i] = i;
-			sumMoney[i] = tempMoney;
-			tempMoney = tempMoney * rate;
-			i++;
-	   }while(i < total);
-	   
-var dom = document.getElementById("container");
-var myChart = echarts.init(dom);
-var app = {};
-option = null;
-option = {
-    xAxis: {
-        type: 'category',
-        data: sumCount
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: sumMoney,
-        type: 'line'
-    }],
-    tooltip : {
-        trigger: 'axis',
-		formatter: '第{b0}年: 共({c0}).toFixed(2)元'
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript"
+        src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script type="text/javascript">
+    //存放总年数
+    var total = 100;
+    //年利率
+    var rate = 1.05;
+    //初始金额
+    var tempMoney = 100000;
+    var sumCount = new Array(total);
+    var sumMoney = new Array(total);
+    var i = 0;
+    do {
+        sumCount[i] = i;
+        sumMoney[i] = tempMoney;
+        tempMoney = tempMoney * rate;
+        i++;
+    } while (i < total);
+
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        xAxis: {
+            type: 'category',
+            data: sumCount
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: sumMoney,
+            type: 'line'
+        }],
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                var xValue = params[0].dataIndex;
+                var yValue = params[0].data;
+                var result = '第' + xValue + '年:共' + yValue.toFixed(2) + '元';
+                return result;
+            }
+        }
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
     }
-};
-;
-if (option && typeof option === "object") {
-    myChart.setOption(option, true);
-}
-       </script>
-   </body>
+</script>
+</body>
 </html>
