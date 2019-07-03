@@ -19,3 +19,11 @@ jsoup提供了Java爬虫常用的API使用起来非常方便，具体教程：ht
 1. 利用jsoup的实现爬虫，遍历博客主页
 2. 将主页访问量低于1000+的
 3. todo
+
+
+#### 参考博文
+Jsoup官方API使用方法：https://try.jsoup.org/
+
+JAVA爬虫挖取CSDN博客文章(续)：https://blog.csdn.net/zhang5476499/article/details/54948348
+
+Java的 jsoup使用之抓取CSDN个人博客内容：https://blog.csdn.net/hzp666/article/details/79098321

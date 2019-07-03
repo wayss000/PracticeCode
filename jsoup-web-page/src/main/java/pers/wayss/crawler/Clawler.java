@@ -1,10 +1,8 @@
 package pers.wayss.crawler;
 
-import com.alibaba.fastjson.JSON;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import java.io.IOException;
+import org.jsoup.select.Elements;
 
 /**
  * @author Wayss.
@@ -14,9 +12,12 @@ public class Clawler {
 
     public static void main(String[] args) {
         try {
-            Document document = Jsoup.connect("https://blog.csdn.net/qq1332479771").get();
-            System.out.println(JSON.toJSONString(document.title()));
-        } catch (IOException e) {
+            Document doc = Jsoup.connect("https://blog.csdn.net/qq1332479771")
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36")
+                    .timeout(3000).get();
+            Elements elements1 = doc.select("ul.archive-list a");
+            System.out.println(elements1.size());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
