@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Wayss.
  * @date 2019/7/2.
  */
-public class Clawler {
+public class Crawler {
 
     private static final String USERAGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
 
