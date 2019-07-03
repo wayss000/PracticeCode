@@ -13,6 +13,7 @@ CSDN博客通过HTTP访问一次即视为一次浏览，每两次浏览之间，
 #### jsoup提供的功能
 jsoup提供了Java爬虫常用的API使用起来非常方便，具体教程：https://www.yiibai.com/jsoup/jsoup-quick-start.html
 
+Jsoup官方API使用方法：https://try.jsoup.org/
 
 #### 代码开发思路
 
@@ -22,7 +23,8 @@ jsoup提供了Java爬虫常用的API使用起来非常方便，具体教程：ht
 
 
 #### 参考博文
-Jsoup官方API使用方法：https://try.jsoup.org/
+
+**注意：** 以下两篇博客的已经不能运行了，原因是CSDN博客部分元素的CSS样式已经发生变化，但这两篇博客的思路非常值得参考和学习。
 
 JAVA爬虫挖取CSDN博客文章(续)：https://blog.csdn.net/zhang5476499/article/details/54948348
 
