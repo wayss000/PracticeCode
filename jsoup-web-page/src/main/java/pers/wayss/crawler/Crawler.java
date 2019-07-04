@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Wayss.
@@ -50,6 +51,8 @@ public class Crawler {
                     String blogUrl = blog.attributes().get("href");
                     pageCountRelation.put(blogUrl, 0);
                 }
+                //访问间隔2秒，避免HTTP 544错误
+                TimeUnit.SECONDS.sleep(2);
             }
 
             //2.遍历所有博客，获取博客的访问量
@@ -68,14 +71,16 @@ public class Crawler {
                 Integer count = Integer.valueOf(countStr);
                 pageCountRelation.put(blogUrl, count);
                 System.out.println(blogDetail.title() + "访问量=" + countStr);
+                //访问间隔2秒，避免HTTP 544错误
+                TimeUnit.SECONDS.sleep(2);
             }
 
             //3.pageCountRelation循环，直到pageCountRelation为空停止
-            while (pageCountRelation.size() > 0){
+            while (pageCountRelation.size() > 0) {
                 for (String blogUrl : pageCountRelation.keySet()) {
                     Integer count = pageCountRelation.get(blogUrl);
                     //访问量大于条件值时，不刷了
-                    if (count > 30){
+                    if (count > 30) {
                         break;
                     }
                     //TODO 同IP，60秒内重复访问算一次有效阅读
@@ -89,10 +94,12 @@ public class Crawler {
                     //正则获取阅读数
                     String regex = ".+阅读数 (\\d+)</span>";
                     String countStr = temp.replaceAll(regex, "$1");
-
+                    //更新阅读数
                     count = Integer.valueOf(countStr);
                     pageCountRelation.put(blogUrl, count);
                     System.out.println(blogDetail.title() + "访问量=" + countStr);
+                    //访问间隔2秒，避免HTTP 544错误
+                    TimeUnit.SECONDS.sleep(2);
                 }
 
             }
