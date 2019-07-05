@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,25 +26,33 @@ public class ViewPage implements Runnable {
     //博客url
     private String blogUrl;
 
+    //用信号量控制多线程，在某时刻高并发访问
+    private Semaphore semaphore;
+
     //最大的阅读量，大于此阅读量的博客就不访问了
-    private static final int MAX_COUNT = 30;
+    private static final int MAX_COUNT = 100;
 
     private static final int WAIT_SECOND_TIME = 61;
 
-    public ViewPage(ConcurrentHashMap map, String blogUrl) {
+    public ViewPage(ConcurrentHashMap map, String blogUrl, Semaphore semaphore) {
         this.pageCountRelation = map;
         this.blogUrl = blogUrl;
+        this.semaphore = semaphore;
     }
 
     public void run() {
 
         try {
-            //同IP，60秒内重复访问算一次有效阅读
+            //执行前先获取一个信号量许可
+            semaphore.acquire();
             viewPage(blogUrl);
+            //提交线程不能太快，否则会报HTTP 544异常，怀疑是CSDN防刷措施
+            TimeUnit.SECONDS.sleep(2);
+            //访问完网页后释放信号量许可
+            semaphore.release();
+            //同IP，60秒内重复访问算一次有效阅读
             TimeUnit.SECONDS.sleep(WAIT_SECOND_TIME);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -55,7 +64,8 @@ public class ViewPage implements Runnable {
         }
     }
 
-    private void viewPage(String blogUrl) throws IOException {
+    private void viewPage(String blogUrl) throws Exception {
+
         Document blogDetail = Jsoup.connect(blogUrl)
                 .userAgent(USERAGENT)
                 .timeout(10000).get();

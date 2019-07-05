@@ -16,6 +16,9 @@ public class Main {
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(100, 200, 1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(1));
 
+        //用信号量控制多线程，在某时刻高并发访问
+        Semaphore semaphore = new Semaphore(1,true);
+
         int i = 1;
         while (pageCountRelation.size() > 0) {
             System.out.println("执行第[" + i + "]次访问任务");
@@ -23,9 +26,7 @@ public class Main {
             try {
                 //多线程访问博客
                 for (String pageUrl : pageCountRelation.keySet()) {
-                    ViewPage viewPage = new ViewPage(pageCountRelation, pageUrl);
-                    //提交线程不能太快，否则会报HTTP 544异常，怀疑是CSDN防刷措施
-                    TimeUnit.SECONDS.sleep(2);
+                    ViewPage viewPage = new ViewPage(pageCountRelation, pageUrl, semaphore);
                     threadPoolExecutor.execute(viewPage);
                 }
                 //每次启动多线程后等待70秒，目的是等线程池中其他任务执行完退出
