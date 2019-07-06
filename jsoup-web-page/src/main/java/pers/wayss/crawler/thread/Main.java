@@ -24,8 +24,8 @@ public class Main {
 
         int i = 1;
         while (pageCountRelation.size() > 0) {
-            System.out.println("###执行第[" + i + "]次访问任务");
-            System.out.println("###剩余URL数量：" + pageCountRelation.size());
+            log.debug("###执行第[" + i + "]次访问任务");
+            log.debug("###剩余URL数量：" + pageCountRelation.size());
             try {
                 //多线程访问博客
                 for (String pageUrl : pageCountRelation.keySet()) {
@@ -34,8 +34,8 @@ public class Main {
                 }
                 //如果当前线程池中数量大于核心线程数，则继续等待
                 while (threadPoolExecutor.getPoolSize() > threadPoolExecutor.getCorePoolSize()) {
-                    System.out.println("###当前线程池中的数量：getPoolSize()=" + threadPoolExecutor.getPoolSize());
-                    System.out.println("###当前线程池中核心线程数的数量：getCorePoolSize()=" + threadPoolExecutor.getCorePoolSize());
+                    log.debug("###当前线程池中的数量：getPoolSize()=" + threadPoolExecutor.getPoolSize());
+                    log.debug("###当前线程池中核心线程数的数量：getCorePoolSize()=" + threadPoolExecutor.getCorePoolSize());
                     //等线程池中其他任务执行完退出
                     TimeUnit.SECONDS.sleep(WAIT_SECOND_TIME);
                 }

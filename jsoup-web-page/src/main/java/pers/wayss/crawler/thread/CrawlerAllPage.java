@@ -1,5 +1,6 @@
 package pers.wayss.crawler.thread;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author Wayss.
  * @date 2019/7/2.
  */
+@Slf4j
 public class CrawlerAllPage {
 
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
@@ -41,7 +43,7 @@ public class CrawlerAllPage {
     public ConcurrentHashMap<String, Integer> getAllPageUrl() {
 
         try {
-            System.out.println("遍历所有分页查询博客具体URL...");
+            log.info("遍历所有分页查询博客具体URL...");
             //1.遍历每一页，获取所有博客的url
             for (int i = 1; i <= TOTAL_PAGE; i++) {
                 String pageUrl = CSDN_URL + SEPARATE + i;
@@ -62,7 +64,7 @@ public class CrawlerAllPage {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("查询博客具体URL完成!");
+        log.info("查询博客具体URL完成!");
         return pageCountRelation;
     }
 

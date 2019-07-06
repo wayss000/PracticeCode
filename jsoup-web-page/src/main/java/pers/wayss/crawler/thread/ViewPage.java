@@ -1,5 +1,6 @@
 package pers.wayss.crawler.thread;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author Wayss.
  * @date 2019/7/4.
  */
+@Slf4j
 public class ViewPage implements Runnable {
 
     private static final String USERAGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
@@ -79,7 +81,7 @@ public class ViewPage implements Runnable {
         //将最新的阅读数更新到对应博客
         Integer count = Integer.valueOf(countStr);
         pageCountRelation.put(blogUrl, count);
-        System.out.println(blogDetail.title() + "访问量=" + countStr);
+        log.info(blogDetail.title() + "访问量=" + countStr);
     }
 
 }
