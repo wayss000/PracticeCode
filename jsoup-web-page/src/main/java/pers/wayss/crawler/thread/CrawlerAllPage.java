@@ -30,7 +30,7 @@ public class CrawlerAllPage {
     /**
      * 总页数，人工通过页面观察获得
      */
-    private static final int TOTAL_PAGE = 13;
+    private static final int TOTAL_PAGE = 14;
 
     /**
      * key:博客的url
