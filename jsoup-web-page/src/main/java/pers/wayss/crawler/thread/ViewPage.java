@@ -58,12 +58,6 @@ public class ViewPage implements Runnable {
             e.printStackTrace();
         }
 
-        Integer count = pageCountRelation.get(blogUrl);
-        //访问量大于条件值时，不刷了，并从map中移除对应url
-        if (count > MAX_COUNT) {
-            pageCountRelation.remove(blogUrl);
-            return;
-        }
     }
 
     private void viewPage(String blogUrl) throws Exception {
@@ -82,6 +76,13 @@ public class ViewPage implements Runnable {
         Integer count = Integer.valueOf(countStr);
         pageCountRelation.put(blogUrl, count);
         log.info(blogDetail.title() + "访问量=" + countStr);
+
+        //访问量大于条件值时，不刷了，并从map中移除对应url
+        if (count > MAX_COUNT) {
+            log.info("删除=====" + blogDetail.title());
+            pageCountRelation.remove(blogUrl);
+            return;
+        }
     }
 
 }

@@ -17,7 +17,7 @@ public class Main {
         CrawlerAllPage crawlerAllPage = new CrawlerAllPage();
         ConcurrentHashMap<String, Integer> pageCountRelation = crawlerAllPage.getAllPageUrl();
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(300, 600, 1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(1));
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(0, 600, 1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(1));
 
         //用信号量控制多线程，在某时刻高并发访问
         Semaphore semaphore = new Semaphore(1, true);
@@ -32,10 +32,10 @@ public class Main {
                     ViewPage viewPage = new ViewPage(pageCountRelation, pageUrl, semaphore);
                     threadPoolExecutor.execute(viewPage);
                 }
-                //如果当前线程池中数量大于核心线程数，则继续等待
-                while (threadPoolExecutor.getPoolSize() > threadPoolExecutor.getCorePoolSize()) {
+                //如果当前线程池中数量大于博客总数，则继续等待
+                while (pageCountRelation.size() > 0 && threadPoolExecutor.getPoolSize() >= pageCountRelation.size()) {
                     log.debug("###当前线程池中的数量：getPoolSize()=" + threadPoolExecutor.getPoolSize());
-                    log.debug("###当前线程池中核心线程数的数量：getCorePoolSize()=" + threadPoolExecutor.getCorePoolSize());
+                    log.debug("###当前线程池中核心线程数的数量：pageCountRelation.size()=" + pageCountRelation.size());
                     //等线程池中其他任务执行完退出
                     TimeUnit.SECONDS.sleep(WAIT_SECOND_TIME);
                 }
@@ -45,6 +45,6 @@ public class Main {
             }
             i++;
         }
-
+        threadPoolExecutor.shutdown();
     }
 }
