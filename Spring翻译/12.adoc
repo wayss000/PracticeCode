@@ -1,0 +1,134 @@
+[[beans-p-namespace]]
+==== XML Shortcut with the p-namespace
+ 
+<<<永立
+
+==== 带p-命名空间的XML快捷方式
+
+>>>
+ 
+ 
+The p-namespace lets you use the `bean` element's attributes (instead of nested
+`<property/>` elements) to describe your property values collaborating beans, or both.
+ 
+<<<永立
+
+p-命名空间让你使用 `bean` 元素的属性（代替内嵌的 `<property/>` 元素）去描述beans的属性值，或同时描述两者。
+
+>>>
+ 
+ 
+Spring supports extensible configuration formats <<core.adoc#xsd-schemas,with namespaces>>,
+which are based on an XML Schema definition. The `beans` configuration format discussed in
+this chapter is defined in an XML Schema document. However, the p-namespace is not defined
+in an XSD file and exists only in the core of Spring.
+ 
+<<<永立
+
+Spring支持可扩展的配置格式<<core.adoc#xsd-schemas,使用命名空间>>，基于XML模式定义。 讨论的 `beans` 配置格式在本章的XML Schema文档中定义。然而，p-命名空间未定义在XSD文件中，仅存在在Spring core中。
+
+>>>
+
+ 
+ 
+The following example shows two XML snippets (the first uses
+standard XML format and the second uses the p-namespace) that resolve to the same result:
+ 
+<<<永立
+
+下面的例子展示了两个XML代码段解决了相同的问题（第一个使用标准XML格式，第二个使用p-命名空间格式）：
+
+>>>
+ 
+ 
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   <beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:p="http://www.springframework.org/schema/p"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans
+         https://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+      <bean name="classic" class="com.example.ExampleBean">
+         <property name="email" value="someone@somewhere.com"/>
+      </bean>
+ 
+      <bean name="p-namespace" class="com.example.ExampleBean"
+         p:email="someone@somewhere.com"/>
+   </beans>
+----
+ 
+The example shows an attribute in the p-namespace called `email` in the bean definition.
+This tells Spring to include a property declaration. As previously mentioned, the
+p-namespace does not have a schema definition, so you can set the name of the attribute
+to the property name.
+ 
+<<<永立
+
+这个例子展示了在bean定义中用p-命名空间给 `email` 属性赋值。这说明Spring包含一个属性说明。如前所述，p-命名空间没有架构定义，因此你可以通过属性名称给属性设值。
+
+>>>
+ 
+ 
+This next example includes two more bean definitions that both have a reference to
+another bean:
+
+<<<永立
+
+下面这个例子包含两个bean定义，它们都引用了另一个bean：
+
+>>>
+
+
+ 
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   <beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:p="http://www.springframework.org/schema/p"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans
+         https://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+      <bean name="john-classic" class="com.example.Person">
+         <property name="name" value="John Doe"/>
+         <property name="spouse" ref="jane"/>
+      </bean>
+ 
+      <bean name="john-modern"
+         class="com.example.Person"
+         p:name="John Doe"
+         p:spouse-ref="jane"/>
+ 
+      <bean name="jane" class="com.example.Person">
+         <property name="name" value="Jane Doe"/>
+      </bean>
+   </beans>
+----
+ 
+This example includes not only a property value using the p-namespace
+but also uses a special format to declare property references. Whereas the first bean
+definition uses `<property name="spouse" ref="jane"/>` to create a reference from bean
+`john` to bean `jane`, the second bean definition uses `p:spouse-ref="jane"` as an
+attribute to do the exact same thing. In this case, `spouse` is the property name,
+whereas the `-ref` part indicates that this is not a straight value but rather a
+reference to another bean.
+ 
+<<<永立
+
+这个例子不仅包含了使用p-命名空间设值属性值，而且还使用一个特殊格式声明属性引用。然而第一个bean定义使用 `<property name="spouse" ref="jane"/>` 从bean `john` 中创建一个引用，第二个bean顶一个使用 `p:spouse-ref="jane"` 作为一个扩展属性完成相同的事情。在这种情况下 `spouse` 是一个属性名称，而 `-ref` 部分表示这不是一个直接值而是引用了另一个bean。
+
+>>>
+ 
+ 
+ 
+NOTE: The p-namespace is not as flexible as the standard XML format. For example, the format
+for declaring property references clashes with properties that end in `Ref`, whereas the
+standard XML format does not. We recommend that you choose your approach carefully and
+communicate this to your team members to avoid producing XML documents that use all
+three approaches at the same time.
+
+<<<永立
+
+NOTE: p-命名空间不如标准的XML灵活，例如，用于定义属性引用的格式和以 `Ref` 结尾的属性冲突。而标准的XML格式不存在这个问题。我们推荐你谨慎选择，并和团队成员沟通，避免同时使用三种方法。
+
+>>>
