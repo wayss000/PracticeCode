@@ -8,6 +8,17 @@ then nested `constructor-arg` elements.
 The following example uses the `c:` namespace to do the same thing as the from
 <<beans-constructor-injection>>:
  
+<<<永立
+
+==== c-命名空间的XML快捷配置
+
+和<<beans-p-namespace>>类似，c-命名空间发布于Spring3.1中，允许使用内联属性来配置构造函数参数代替 `constructor-arg` 元素.
+
+下面的例子使用 `c:` 命名空间做了和<<beans-constructor-injection>>相同的事情：
+
+>>>
+ 
+ 
 [source,xml,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -43,6 +54,16 @@ For the rare cases where the constructor argument names are not available (usual
 the bytecode was compiled without debugging information), you can use fallback to the
 argument indexes, as follows:
  
+<<<永立
+
+`c:` 命名空间和 `p:` 命名空间使用相同的约定（后跟 `-ref` 用于bean引用），用于通过名称设置构造函数。同样，即使它没有定义在XSD模式中，也需要在XML文件中声明
+（它存在于Spring core中）。
+
+在极少数情况下，构造函数参数不可用（通常是字节码在没有调试信息的情况下编译的），你可以使用后备参数索引，如下所示：
+
+>>>
+ 
+ 
 [source,xml,indent=0,subs="verbatim,quotes"]
 ----
    <!-- c-namespace index declaration -->
@@ -55,8 +76,20 @@ as XML attribute names cannot start with a number (even though some IDEs allow i
 A corresponding index notation is also available for `<constructor-arg>` elements but
 not commonly used since the plain order of declaration is usually sufficient there.
  
+<<<永立
+
+NOTE: 由于XML语法的原因，索引符号要求前面有 `_`，因为XML属性名不能以数字开头（即使某些IDE允许）。相应的索引符号也可用于 `<constructor-arg>` 元素，但是不常用，因为那里简单的声明顺序就够了。
+
+>>>
+ 
+ 
 In practice, the constructor resolution
 <<beans-factory-ctor-arguments-resolution,mechanism>> is quite efficient in matching
 arguments, so unless you really need to, we recommend using the name notation
 through-out your configuration.
 
+<<<永立
+
+在实践中，构造函数解析<<beans-factory-ctor-arguments-resolution,mechanism>>在匹配参数方面非常有效，因此除非你真正的需要，我们建议你的整个配置使用相同的名称符号。
+
+>>>
