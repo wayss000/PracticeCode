@@ -1,0 +1,56 @@
+[[beans-inner-beans]]
+==== Inner Beans
+<<< 永立
+
+内部Beans
+
+>>>
+    
+A `<bean/>` element inside the `<property/>` or `<constructor-arg/>` elements defines an
+inner bean, as the following example shows:
+ 
+<<< 永立
+
+在 `<property/>` 或者 `<constructor-arg/>` 元素内部定义的 `<bean/>` 叫做内部Beans，如下面的例子所示：
+
+>>>
+
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   <bean id="outer" class="...">
+      <!-- instead of using a reference to a target bean, simply define the target bean inline -->
+      <property name="target">
+         <bean class="com.example.Person"> <!-- this is the inner bean -->
+            <property name="name" value="Fiona Apple"/>
+            <property name="age" value="25"/>
+         </bean>
+      </property>
+   </bean>
+----
+ 
+An inner bean definition does not require a defined ID or name. If specified, the container
+does not use such a value as an identifier. The container also ignores the `scope` flag on
+creation, because inner beans are always anonymous and are always created with the outer
+bean. It is not possible to access inner beans independently or to inject them into
+collaborating beans other than into the enclosing bean.
+ 
+<<< 永立
+
+内部bean不需要定义ID或名称。即使指定了，容器也不会使用这个值作为唯一标识符。容器在创建时同样也会忽略 `scope` 标签，因为内部beans始终是匿名的，并且和外部bean一起创建。内部bean不可能被独立的访问，或者将其注入除封闭的Bean之外的其他Bean。
+
+todo:最后一句没明白
+
+>>>
+ 
+As a corner case, it is possible to receive destruction callbacks from a custom scope --
+for example, for a request-scoped inner bean contained within a singleton bean. The creation
+of the inner bean instance is tied to its containing bean, but destruction callbacks let it
+participate in the request scope's lifecycle. This is not a common scenario. Inner beans
+typically simply share their containing bean's scope.
+
+
+<<< 永立
+
+作为特殊情况，内部bean可以从自定义范围接收、销毁、回调，例如，对于单例bean中包含的request-scoped的内部bean。内部bean创建实例时试图包含其他bean，但是销毁回调使它可以参与request-scoped的生命周期。这是不常用的情况。通常，内部bean只是简单共享他们包含bean的范围。
+
+>>>

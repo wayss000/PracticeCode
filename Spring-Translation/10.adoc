@@ -1,0 +1,272 @@
+[[beans-collection-elements]]
+==== Collections
+<<<永立
+
+==== 集合
+
+>>>
+
+
+ 
+The `<list/>`, `<set/>`, `<map/>`, and `<props/>` elements set the properties
+and arguments of the Java `Collection` types `List`, `Set`, `Map`, and `Properties`,
+respectively. The following example shows how to use them:
+
+<<<永立
+
+Spring中`<list/>`, `<set/>`, `<map/>` 和  `<props/>` 元素用来设置Java `Collection` 类型的 `List`, `Set`, `Map`, 和 `Properties` 的属性和参数。以下示例显示了如何使用它们：
+
+>>>
+
+
+ 
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   <bean id="moreComplexObject" class="example.ComplexObject">
+      <!-- results in a setAdminEmails(java.util.Properties) call -->
+      <property name="adminEmails">
+         <props>
+            <prop key="administrator">administrator@example.org</prop>
+            <prop key="support">support@example.org</prop>
+            <prop key="development">development@example.org</prop>
+         </props>
+      </property>
+      <!-- results in a setSomeList(java.util.List) call -->
+      <property name="someList">
+         <list>
+            <value>a list element followed by a reference</value>
+            <ref bean="myDataSource" />
+         </list>
+      </property>
+      <!-- results in a setSomeMap(java.util.Map) call -->
+      <property name="someMap">
+         <map>
+            <entry key="an entry" value="just some string"/>
+            <entry key ="a ref" value-ref="myDataSource"/>
+         </map>
+      </property>
+      <!-- results in a setSomeSet(java.util.Set) call -->
+      <property name="someSet">
+         <set>
+            <value>just some string</value>
+            <ref bean="myDataSource" />
+         </set>
+      </property>
+   </bean>
+----
+ 
+The value of a map key or value, or a set value, can also be any of the
+following elements:
+ 
+<<<永立
+
+map的键和值，或者set的值，也可以是以下任意元素：
+
+>>>
+
+
+ 
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   bean | ref | idref | list | set | map | props | value | null
+----
+ 
+[[beans-collection-elements-merging]]
+===== Collection Merging
+ 
+<<<永立
+
+===== 集合合并
+
+>>>
+
+ 
+The Spring container also supports merging collections. An application
+developer can define a parent `<list/>`, `<map/>`, `<set/>` or `<props/>` element
+and have child `<list/>`, `<map/>`, `<set/>` or `<props/>` elements inherit and
+override values from the parent collection. That is, the child collection's values are
+the result of merging the elements of the parent and child collections, with the child's
+collection elements overriding values specified in the parent collection.
+ 
+<<<永立
+
+Spring容器还支持合并集合。应用程序开发人员可以定义父 `<list/>`, `<map/>`, `<set/>` 或 `<props/>` 元素，并具有从父集合集成和覆盖的的 `<list/>`, `<map/>`, `<set/>` 或 `<props/>` 子元素。也就是说，子集合的值是合并父集合和子集合元素的结果，子集合的元素会覆盖父集合中指定的值。
+
+>>>
+ 
+This section on merging discusses the parent-child bean mechanism. Readers unfamiliar
+with parent and child bean definitions may wish to read the
+<<beans-child-bean-definitions,relevant section>> before continuing.
+ 
+<<<永立
+
+这部分讨论了合并父子bean机制。不熟悉父bean和子bean的读者可能希望先阅读<<beans-child-bean-definitions,相关部分>>然后再继续。
+
+
+>>>
+ 
+ 
+The following example demonstrates collection merging:
+ 
+<<<永立
+
+下面的示例演示了集合合并：
+
+>>>
+ 
+ 
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   <beans>
+      <bean id="parent" abstract="true" class="example.ComplexObject">
+         <property name="adminEmails">
+            <props>
+               <prop key="administrator">administrator@example.com</prop>
+               <prop key="support">support@example.com</prop>
+            </props>
+         </property>
+      </bean>
+      <bean id="child" parent="parent">
+         <property name="adminEmails">
+            <!-- the merge is specified on the child collection definition -->
+            <props merge="true">
+               <prop key="sales">sales@example.com</prop>
+               <prop key="support">support@example.co.uk</prop>
+            </props>
+         </property>
+      </bean>
+   <beans>
+----
+ 
+Notice the use of the `merge=true` attribute on the `<props/>` element of the
+`adminEmails` property of the `child` bean definition. When the `child` bean is resolved
+and instantiated by the container, the resulting instance has an `adminEmails`
+`Properties` collection that contains the result of merging the child's
+`adminEmails` collection with the parent's `adminEmails` collection. The following listing
+shows the result:
+
+<<<永立
+
+请注意，在 `<props/>` 元素上使用 `merge=true` 的 `adminEmails` 属性的 `child` bean定义。当 `child` bean被容器解析和实例化后，生成包含 `adminEmails` `Properties` 集合的实例，并且包含了子 `adminEmails`
+集合和父 `adminEmails` 集合。以下清单展示了示例：
+
+>>>
+
+
+[literal,subs="verbatim,quotes"]
+----
+administrator=administrator@example.com
+sales=sales@example.com
+support=support@example.co.uk
+----
+The child `Properties` collection's value set inherits all property elements from the
+parent `<props/>`, and the child's value for the `support` value overrides the value in
+the parent collection.
+ 
+<<<永立
+
+子 `Properties` 集合的值继承父 `<props/>` 的所有属性元素值。并且子元素的值可以用 `support` 覆盖父集合的值。
+
+>>>
+
+ 
+ 
+This merging behavior applies similarly to the `<list/>`, `<map/>`, and `<set/>`
+collection types. In the specific case of the `<list/>` element, the semantics
+associated with the `List` collection type (that is, the notion of an `ordered`
+collection of values) is maintained. The parent's values precede all of the child list's
+values. In the case of the `Map`, `Set`, and `Properties` collection types, no ordering
+exists. Hence, no ordering semantics are in effect for the collection types that underlie
+the associated `Map`, `Set`, and `Properties` implementation types that the container
+uses internally.
+
+<<<永立
+
+这种合并行为相似地应用于 `<list/>`, `<map/>`, 和 `<set/>` 集合类型。在 `<list/>` 元素有个特殊情况，语义和 `List` 集合类型有关联（即，值的集合 `order` 概念）。父列表的值优先于子列表的值。在集合类型是 `Map`, `Set`, 和 `Properties` 的情况下，无需排序。因此，容器内部使用上，在集合 `Map`, `Set`, 和 `Properties` 类型上是没有排序语法的。
+
+>>>
+
+
+
+[[beans-collection-merge-limitations]]
+===== Limitations of Collection Merging
+ 
+You cannot merge different collection types (such as a `Map` and a `List`). If you
+do attempt to do so, an appropriate `Exception` is thrown. The `merge` attribute must be
+specified on the lower, inherited, child definition. Specifying the `merge` attribute on
+a parent collection definition is redundant and does not result in the desired merging.
+ 
+<<< 永立
+
+==== 集合合并的局限性
+
+你不能合并不同的集合类型（例如一个 `Map` 和一个 `List`）。如果你企图那么做，一个对应的 `Exception` 会被抛出。`merge` 属性必须定义在低级的，继承的，子类中定义。在父集合中指定 `merge` 属性是多余的并且也不能达到预期的合并效果。
+
+>>>
+ 
+[[beans-collection-elements-strongly-typed]]
+===== Strongly-typed collection
+ 
+With the introduction of generic types in Java 5, you can use strongly typed collections.
+That is, it is possible to declare a `Collection` type such that it can only contain
+(for example) `String` elements. If you use Spring to dependency-inject a
+strongly-typed `Collection` into a bean, you can take advantage of Spring's
+type-conversion support such that the elements of your strongly-typed `Collection`
+instances are converted to the appropriate type prior to being added to the `Collection`.
+The following Java class and bean definition show how to do so:
+ 
+<<<永立
+
+===== 强类型集合
+
+随着Java 5中泛型类型的引入，你可以使用强类型。也就是说，可以声明一个 `Collection` 类型，使其只能包含（例如） `String` 类型。如果你使用Spring依赖注入一个强类型 `Collection` 到一个bean中，你就可以使用Spring提供的类型转换支持，就可以使你的强类型 `Collection` 元素实例在添加到 `Collection` 之前，转换为适当的类型。以下Java类和bean定义显示了如何执行此操作：
+
+>>>
+ 
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
+----
+   public class SomeClass {
+ 
+      private Map<String, Float> accounts;
+ 
+      public void setAccounts(Map<String, Float> accounts) {
+         this.accounts = accounts;
+      }
+   }
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+class SomeClass {
+   lateinit var accounts: Map<String, Float>
+}
+----
+ 
+[source,xml,indent=0,subs="verbatim,quotes"]
+----
+   <beans>
+      <bean id="something" class="x.y.SomeClass">
+         <property name="accounts">
+            <map>
+               <entry key="one" value="9.99"/>
+               <entry key="two" value="2.75"/>
+               <entry key="six" value="3.99"/>
+            </map>
+         </property>
+      </bean>
+   </beans>
+----
+ 
+When the `accounts` property of the `something` bean is prepared for injection, the generics
+information about the element type of the strongly-typed `Map<String, Float>` is
+available by reflection. Thus, Spring's type conversion infrastructure recognizes the
+various value elements as being of type `Float`, and the string values (`9.99, 2.75`, and
+`3.99`) are converted into an actual `Float` type.
+
+<<<永立
+
+当 `something` bean的 `accounts` 属性准备注入时，强类型元素 `Map<String, Float> ` 的泛型信息是可以通过反射获取的。因此，Spring类型转换架构可以识别出各种元素值类型为 `Float` ，和字符串值（`9.99, 2.75`, 和
+`3.99`）转换为实际的 `Float` 类型。
+
+>>>
