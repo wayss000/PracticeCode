@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app" style="border: 1px solid black;">
+    <el-input v-model="problem" :readonly="true" placeholder="这里是问题">
+    </el-input>
+    <el-input v-model="answer" placeholder="请输入答案">
+    </el-input>
+    <el-button @click="onClick(1)">1</el-button>
+    <el-button @click="onClick(2)">2</el-button>
+    <el-button @click="onClick(3)">3</el-button>
+    <el-button @click="onClick(0)">0</el-button>
+    <br>
+    <el-button @click="onClick(4)">4</el-button>
+    <el-button @click="onClick(5)">5</el-button>
+    <el-button @click="onClick(6)">6</el-button>
+    <el-button @click="subLast">Del</el-button>
+    <br>
+    <el-button @click="onClick(7)">7</el-button>
+    <el-button @click="onClick(8)">8</el-button>
+    <el-button @click="onClick(9)">9</el-button>
+    <el-button @click="submit">OK</el-button>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                problem: '',
+                answer: '',
+                num1: null,
+                num2: null,
+                symbol: null
+            }
+        },
+        methods: {
+            //输入数组展示到结果栏
+            onClick(number) {
+                this.answer = this.answer + number;
+            },
+            //删除逻辑
+            subLast() {
+                this.answer = this.answer.substr(0, this.answer.length - 1);
+            },
+            submit() {
+                var result;
+                switch (this.symbol) {
+                    case '+':
+                        result = this.num1 + this.num2;
+                        break;
+                    case '-':
+                        result = this.num1 - this.num2;
+                        break;
+                    case '*':
+                        result = this.num1 * this.num2;
+                        break;
+                    case '/':
+                        result = this.num1 / this.num2;
+                        break;
+                }
+                //结果比较，只考虑整数
+                if (parseInt(this.answer) === parseInt(result)) {
+                    this.$message({
+                        message: '回答正确',
+                        type: 'success'
+                    });
+                } else {
+                    this.$message.error('回答错误');
+                }
+                console.log(this.answer);
+                console.log(result);
+                this.answer = '';
+                this.generateProblem();
+            },
+            //随机生成= - * /
+            generateSymbol() {
+                var random = Math.random();
+                if (0 < random && random <= 0.25) {
+                    return '+';
+                }
+                if (0.25 < random && random <= 0.5) {
+                    return '-';
+                }
+                if (0.5 < random && random <= 0.75) {
+                    return '*';
+                }
+                if (0.75 < random && random < 1) {
+                    return '/';
+                }
+            },
+            //随机生成问题
+            generateProblem() {
+                this.symbol = this.generateSymbol();
+                switch (this.symbol) {
+                    case '+':
+                        this.num1 = this.numLess100();
+                        this.num2 = this.numLess100();
+                        this.problem = this.num1 + this.symbol + this.num2;
+                        break;
+                    case '-':
+                        this.num1 = this.numLess100();
+                        do {
+                            this.num2 = this.numLess100();
+                        } while (this.num1 < this.num2);
+                        this.problem = this.num1 + this.symbol + this.num2;
+                        break;
+                    case '*':
+                        this.num1 = this.numLess100();
+                        this.num2 = this.numLess10();
+                        this.problem = this.num1 + this.symbol + this.num2;
+                        break;
+                    case '/':
+                        this.num1 = this.numLess100();
+                        do {
+                            this.num2 = this.numLess10();
+                        } while (this.num1 < this.num2);
+                        this.problem = this.num1 + this.symbol + this.num2;
+                        break;
+                }
+            },
+            //随机生成100以内的数
+            numLess100() {
+                return Math.ceil(Math.random() * 100);
+            },
+            //随机生成10以内的数
+            numLess10() {
+                return Math.ceil(Math.random() * 10);
+            }
+        },
+        mounted() {
+            this.generateProblem();
+        }
+    })
+</script>
+</html>
+<!-- 给自己写的练习脑子的算数题 -->
